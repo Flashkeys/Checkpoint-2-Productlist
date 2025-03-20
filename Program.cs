@@ -13,16 +13,19 @@ while (true)
 {
     string checkInput = Console.ReadLine().Trim();
 
+    // Check if the user wants to quit the program
     if (checkInput.ToUpper() == "Q")
     {
         break;
     }
     switch(checkInput.ToUpper())
     {
+        // Check if the user wants to print the list of products
         case "P":
             Console.WriteLine("Current Products: ");
             productList.PrintProducts();
             break;
+        // Check if the user wants to add a new product
         case "N":
             {
                 Console.Write("Enter a category: ");
@@ -48,14 +51,16 @@ while (true)
                 }
                 break;
             }
-            case "S":
+        // Check if the user wants to search for a product
+        case "S":
             {
                 Console.Write("Enter a search term: ");
                 string searchTerm = Console.ReadLine().ToLower();
                 productList.PrintProducts(searchTerm);
                 break;
             }
-            default:
+        // If the input is invalid, print an error message
+        default:
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid input. Please try again.");
@@ -65,6 +70,7 @@ while (true)
             }
     }
 }
+// ProduktList class is used to create a list of products and add products to the list
 class ProduktList
 {
     public ProduktList()
@@ -72,11 +78,13 @@ class ProduktList
         Products = new List<Produkt>();
     }
     public List<Produkt> Products { get; set; }
+    // AddProduct method is used to add a product to the list and sort the list by price
     public void AddProduct(Produkt product)
     {
         Products.Add(product);
         Products = Products.OrderBy(p => p.Price).ToList();
     }
+    // PrintProductTitle method is used to print the product title with the search term highlighted
     private void PrintProductTitle(string title, string value, string search = "")
     {
         Console.Write(title + ": ");
@@ -95,7 +103,6 @@ class ProduktList
     }
     private void PrintProduct(Produkt product, string search = "")
     {
-        //Console.WriteLine($"Category: {product.Category.PadRight(20)} Name: {product.Name.PadRight(20)} Price: {product.Price}");
         PrintProductTitle("Category", product.Category.PadRight(20), search);
         PrintProductTitle("Name", product.Name.PadRight(20), search);
         PrintProductTitle("Price", product.Price.ToString(), search);
@@ -116,6 +123,7 @@ class ProduktList
     }
 
 }
+// Produkt class is used to create a product object with category, name, and price
 class Produkt
 {
     public Produkt(string category, string name, int price)
@@ -128,6 +136,7 @@ class Produkt
     public string Category { get; set; }
     public string Name { get; set; }
     public int Price { get; set; }
+    // Equals method is used to compare two product objects
     public override bool Equals(object? x)
     {
         var product = x as Produkt;
